@@ -1,35 +1,22 @@
 use bevy::prelude::*;
-
-#[derive(Component)]
-struct Person;
-
-
-#[derive(Component)]
-struct Name(String);
-
-fn add_people(mut commands: Commands) {
-    commands.spawn((Person, Name("Cum in Mouth wizard".to_string())));
-    commands.spawn((Person, Name("Mmm that was a good one, guy".to_string())));
-    commands.spawn((Person, Name("FIREBALL!!".to_string())));
-}
-
-fn hello_world() {
-    println!("hello world!");
-}
-
-fn greet_people(query: Query<&Name, With<Person>>) {
-    for name in &query {
-        println!("hello {}!", name.0);
-    }
-}
-
-
+use bevy_egui::{egui, EguiContexts, EguiPlugin, EguiPrimaryContextPass};
 
 fn main() {
     App::new()
-        .add_systems(Startup, add_people)
-        .add_systems(Update, greet_people)
-        .add_systems(Update, hello_world)
+        .add_plugins(DefaultPlugins)
+        .add_plugins(EguiPlugin::default())
+        .add_systems(Startup, setup_camera_system)
+        .add_systems(EguiPrimaryContextPass, ui_example_system)
         .run();
 }
 
+fn setup_camera_system(mut commands: Commands) {
+    commands.spawn(Camera2d);
+}
+
+fn ui_example_system(mut contexts: EguiContexts) -> Result {
+    egui::Window::new("Hello").show(contexts.ctx_mut()?, |ui| {
+        ui.label("world");
+    });
+    Ok(())
+}
