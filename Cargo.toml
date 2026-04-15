@@ -20,4 +20,5 @@ strip = "debuginfo"
 
 [dependencies]
 bevy = "0.18.1"
+bevy_egui = "0.39.1"
 egui = "0.34.1"
