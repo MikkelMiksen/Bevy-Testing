@@ -13,9 +13,7 @@ fn add_people(mut commands: Commands) {
     commands.spawn((Person, Name("FIREBALL!!".to_string())));
 }
 
-fn hello_world() {
-    println!("hello world!");
-}
+
 
 fn update_people(mut query: Query<&mut Name, With<Person>>) {
     for mut name in &mut query {
@@ -39,7 +37,7 @@ impl Plugin for HelloPlugin {
     fn build(&self, app: &mut App) {
         // add things to your app here
         app.add_systems(Startup, add_people);
-        app.add_systems(Update, (hello_world, update_people, greet_people).chain());
+        app.add_systems(Update, (update_people, greet_people).chain());
     }
 }
 
